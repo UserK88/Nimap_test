@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.nimap.Model.Category;
@@ -24,8 +25,9 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public List<Category> getAllProducts(int page, int size){
-        return categoryService.getAllCategories(page, size);
+    public List<Category> getAllCategories(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "2") int size){
+        List<Category> categories = categoryService.getAllCategories(page - 1, size);
+        return categories;
     }
 
     @PostMapping
@@ -35,7 +37,7 @@ public class CategoryController {
 
     @GetMapping("/{di}")
     public String getCategoryById(@PathVariable("di") String id){
-        return categoryService.getById(id);
+        return categoryService.getCategoryById(id);
     }
 
     @DeleteMapping("/{di}")

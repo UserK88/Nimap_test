@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.nimap.Model.Product;
@@ -23,8 +24,9 @@ public class ProductController {
     private ProductService productService;
 
     @GetMapping
-    public List<Product> getAllProducts(int page, int size){
-        return productService.getAllProducts(page, size);
+    public List<Product> getAllProducts(@RequestParam(defaultValue = "1") int page, @RequestParam(defaultValue = "2") int size){
+        List<Product> products = productService.getAllProducts(page-1, size);
+        return products;
     }
 
     @PostMapping
@@ -43,7 +45,7 @@ public class ProductController {
     }
 
     @PutMapping("/{di}")
-    public String updateProduct(@PathVariable("di") String id, String name, Double price, String description, Integer stock){
+    public String updateProduct(@PathVariable("di") String id,@RequestParam("name") String name,@RequestParam("price") Double price,@RequestParam("description") String description,@RequestParam("stock") Integer stock){
         return productService.updateProduct(id, name, price, description, stock);
     }
 }

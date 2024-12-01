@@ -24,9 +24,9 @@ public class ProductService {
 
     public List<Product> getAllProducts(Integer page, Integer size){
         Pageable pageable = PageRequest.of(page, size);
-        Page<Product> allRpoducts = productRepository.findAll(pageable);
+        Page<Product> allProducts = productRepository.findAll(pageable);
 
-        return allRpoducts.getContent();
+        return allProducts.getContent();
     }
 
     public String addProduct(Product product){
@@ -45,21 +45,15 @@ public class ProductService {
     public String getProductById(String id){
         Product product = productRepository.findById(id).get();
         if(product==null){
-            return "Product with ID0"+id+" not found";
+            return "Product with ID "+id+" not found";
         }
         return product.toString();
-        // Optional<Product> productOpt = productRepository.findById(id);
-        // if (productOpt.isPresent()) {
-        //     return productOpt.get().toString();
-        // }
-        // return "Product not found";
-        }
+    }
 
     public String deleteById(String id){
         Product product = productRepository.findById(id).orElseThrow(() -> new RuntimeException());
         productRepository.delete(product);
         return product.toString()+" deleted successfully";
-
     } 
 
     public String updateProduct(String id, String productName, Double price, String description, Integer stock){

@@ -28,7 +28,7 @@ public class CategoryService {
         return category.toString()+" added successfully";
     }
 
-    public String getById(String id){
+    public String getCategoryById(String id){
         Category category = categoryRepository.findById(id).get();
         return category.toString();
     }
