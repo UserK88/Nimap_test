@@ -29,18 +29,18 @@ public class CategoryController {
     }
 
     @PostMapping
-    public Category addNewCategory(@RequestBody Category catergory){
+    public String addNewCategory(@RequestBody Category catergory){
         return categoryService.addNewCategory(catergory);
     }
 
     @GetMapping("/{di}")
-    public void getCategoryById(@PathVariable("di") String id){
-        categoryService.getById(id);
+    public String getCategoryById(@PathVariable("di") String id){
+        return categoryService.getById(id);
     }
 
     @DeleteMapping("/{di}")
-    public void deleteById(@PathVariable("di") String id){
-        categoryService.deleteCategory(id);
+    public String deleteById(@PathVariable("di") String id){
+        return categoryService.deleteCategory(id);
     }
 
     @PutMapping("/{di}")

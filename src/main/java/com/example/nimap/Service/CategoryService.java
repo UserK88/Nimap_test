@@ -17,26 +17,26 @@ public class CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<Category> getAllCategories(Integer page, Integer size){
+    public List<Category> getAllCategories(int page, int size){
         Pageable pageable = PageRequest.of(page, size);
         Page<Category> allCategories = categoryRepository.findAll(pageable);
         return allCategories.getContent();
     }
 
-    public Category addNewCategory(Category category){
+    public String addNewCategory(Category category){
         categoryRepository.save(category);
-        return category;
+        return category.toString()+" added successfully";
     }
 
-    public Category getById(String id){
+    public String getById(String id){
         Category category = categoryRepository.findById(id).get();
-        return category;
+        return category.toString();
     }
 
-    public Category deleteCategory(String id){
+    public String deleteCategory(String id){
         Category category = categoryRepository.findById(id).orElseThrow(() -> new RuntimeException());
         categoryRepository.delete(category);
-        return category;
+        return "Category deleted successfully";
     }
 
     public String updateCategory(String id, String name, String description){
@@ -46,6 +46,7 @@ public class CategoryService {
         }else{
             category.setName(name);
             category.setDescription(description);
+            categoryRepository.save(category);
             return category.toString()+" updated successfully";
         }
 

@@ -2,6 +2,7 @@ package com.example.nimap.Model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
@@ -18,9 +19,10 @@ public class Product {
     private String productId;
 
     private String productName;
-    private double price;
+    private Double price;
     private String description;
-    private int stock;
+    @Column(nullable = false)
+    private Integer stock=0;
 
     @ManyToOne
     @JsonBackReference
@@ -31,8 +33,7 @@ public class Product {
 
     }
 
-    public Product(String productId, String productName, double price, String description, int stock,
-            Category category) {
+    public Product(String productId, String productName, double price, String description, int stock, Category category) {
         this.productId = productId;
         this.productName = productName;
         this.price = price;
@@ -44,8 +45,10 @@ public class Product {
     @Override
     public String toString() {
         return "Product [productId=" + productId + ", productName=" + productName + ", price=" + price
-                + ", description=" + description + ", stock=" + stock + ", category=" + category + "]";
+                + ", description=" + description + ", stock=" + stock + ", category=" + (category != null ? category.getId() :"null") + "]";
     }
 
+//    The ternary operator above in the toString() method is added to Avoid Recursive Calls in toString()
+//    Modify the toString() methods to avoid printing the full referenced objects.
     
 }
